@@ -26,17 +26,20 @@ ColumnAssembly::~ColumnAssembly() {
 }
 
 void ColumnAssembly::AddColumn(FlaschenTaschen *taschen) {
-    delete columns_[0];
     columns_.push_back(taschen);
-    width_ = 30;
-    height_ = 22;
+    width_ += 5;
+    height_ = std::max(height_, taschen->height());
 }
 
 void ColumnAssembly::SetPixel(int x, int y, const Color &col) {
     if (x < 0 || x >= width() || y < 0 || y >= height())
         return;
-    FlaschenTaschen *column = columns_[0];
-    column->SetPixel(x, y, col);
+    const int crate_from_left = x / 5;
+    FlaschenTaschen *column = columns_[columns_.size() - crate_from_left - 1];
+
+    // Our physical display has the (0,0) at the bottom right corner.
+    // Flip it around.
+    column->SetPixel(4 - x % 5, height() - y - 1, col);
 }
 
 void ColumnAssembly::Send() {
