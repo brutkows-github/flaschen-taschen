@@ -37,6 +37,26 @@ public:
 // Column helps assembling the various columns of width 5 (the width of a crate)
 // to one big display. Since all SPI based strips are necessary upated in
 // parallel, that SPI send command is triggered within here.
+class SerialMatrixFlaschenTaschen : public ServerFlaschenTaschen {
+public:
+    SerialMatrixFlaschenTaschen(spixels::LEDStrip *strip, width, height);
+    ~SerialMatrixFlaschenTaschen();
+
+    int width() const { return width_; }
+    int height() const { return height_; }
+
+    void SetPixel(int x, int y, const Color &col);
+    void Send();
+
+private:
+    spixels::MultiSPI *const spi_;
+    int width_;
+    int height_;
+};
+
+// Column helps assembling the various columns of width 5 (the width of a crate)
+// to one big display. Since all SPI based strips are necessary upated in
+// parallel, that SPI send command is triggered within here.
 class ColumnAssembly : public ServerFlaschenTaschen {
 public:
     ColumnAssembly(spixels::MultiSPI *spi);
