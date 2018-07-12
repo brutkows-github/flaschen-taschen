@@ -42,6 +42,11 @@
 #  include "led-matrix.h"
 #endif
 
+#if FT_BACKEND == 3
+#  include "multi-spi.h"
+#  include "led-strip.h"
+#endif
+
 #define DROP_PRIV_USER "daemon"
 #define DROP_PRIV_GROUP "daemon"
 
@@ -171,8 +176,23 @@ int main(int argc, char *argv[]) {
     using spixels::MultiSPI;
     using spixels::CreateAPA102Strip;
     static const int kLeds = 660;
-    MultiSPI *const spi = spixels::CreateDMAMultiSPI();
-    SerialMatrixFlaschenTaschen *display = new SerialMatrixFlaschenTaschen(CreateAPA102Strip(spi, MultiSPI::SPI_P1, kLeds), 22, 30);
+    MultiSPI *const spi = spixels::CreateDirectMultiSPI();
+    ServerFlaschenTaschen *display
+        = new SerialMatrixFlaschenTaschen(
+            CreateAPA102Strip(spi, MultiSPI::SPI_P1, kLeds),
+            22, 30);
+    const Color red(64, 64, 64);
+    int x, y;
+    for(x=0; x<30; x++) {
+        for(y=0; y<22; y++) {
+           // fprintf(stderr, "x: %i, y: %i\n", x, y);
+            display->SetPixel(x,y, red);
+            spi->SendBuffers();
+            usleep(2000);
+        }
+    }
+   // fprintf(stderr, "start buffer send\n");
+   // fprintf(stderr, "buffer send done\n");
 #elif FT_BACKEND == 1
     ServerFlaschenTaschen *display
         = new RGBMatrixFlaschenTaschen(

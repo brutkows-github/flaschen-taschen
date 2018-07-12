@@ -66,6 +66,13 @@ ifeq ($(FT_BACKEND), terminal)
    OBJECTS+=terminal-flaschen-taschen.o hd-terminal-flaschen-taschen.o
 endif
 
+ifeq ($(FT_BACKEND), string)
+   DEFINES=-DFT_BACKEND=0
+   OBJECTS+=serial-matrix-flaschen-taschen.o
+   INCLUDES+=-I$(SPIXELS_INCDIR)
+   STATIC_LIBS+=$(SPIXELS_LIBRARY)
+endif
+
 CFLAGS=-Wall -O3 $(INCLUDES) $(DEFINES)
 CXXFLAGS=$(CFLAGS)
 LDFLAGS+=-lpthread
