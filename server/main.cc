@@ -170,13 +170,9 @@ int main(int argc, char *argv[]) {
 #if FT_BACKEND == 0
     using spixels::MultiSPI;
     using spixels::CreateAPA102Strip;
-    static const int kLedsPerCol = 660;
+    static const int kLeds = 660;
     MultiSPI *const spi = spixels::CreateDMAMultiSPI();
-    ColumnAssembly *display = new ColumnAssembly(spi);
-
-#define MAKE_COLUMN(port) new CrateColumnFlaschenTaschen(CreateAPA102Strip(spi, port, kLedsPerCol))
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P1));
-#undef MAKE_COLUMN
+    SerialMatrixFlaschenTaschen *display = new SerialMatrixFlaschenTaschen(CreateAPA102Strip(spi, MultiSPI::SPI_P1, kLeds), 22, 30);
 #elif FT_BACKEND == 1
     ServerFlaschenTaschen *display
         = new RGBMatrixFlaschenTaschen(
