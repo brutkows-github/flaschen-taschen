@@ -169,26 +169,12 @@ int main(int argc, char *argv[]) {
 
 #if FT_BACKEND == 0
     using spixels::MultiSPI;
-    using spixels::CreateWS2801Strip;
-    static const int kLedsPerCol = 7 * 25;
+    using spixels::CreateAPA102Strip;
+    static const int kLedsPerCol = 660;
     MultiSPI *const spi = spixels::CreateDMAMultiSPI();
     ColumnAssembly *display = new ColumnAssembly(spi);
 
-#define MAKE_COLUMN(port) new CrateColumnFlaschenTaschen(CreateWS2801Strip(spi, port, kLedsPerCol))
-
-    // Looking from the back of the display: leftmost column first.
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P8));
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P7));
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P6));
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P5));
-
-    // Center column. Connected to front part
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P13));
-
-    // Rest: continue on the back part
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P4));
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P3));
-    display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P2));
+#define MAKE_COLUMN(port) new CrateColumnFlaschenTaschen(CreateAPA102Strip(spi, port, kLedsPerCol))
     display->AddColumn(MAKE_COLUMN(MultiSPI::SPI_P1));
 #undef MAKE_COLUMN
 #elif FT_BACKEND == 1
