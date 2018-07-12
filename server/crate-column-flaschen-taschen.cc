@@ -41,7 +41,7 @@ int kCrateMapping[5][5] = {
 }  // namespace
 
 CrateColumnFlaschenTaschen::CrateColumnFlaschenTaschen(spixels::LEDStrip *strip)
-    : strip_(strip), height_(22) {
+    : strip_(strip), height_(5 * strip->count() / 25) {
 }
 
 CrateColumnFlaschenTaschen::~CrateColumnFlaschenTaschen() {
@@ -51,15 +51,10 @@ CrateColumnFlaschenTaschen::~CrateColumnFlaschenTaschen() {
 void CrateColumnFlaschenTaschen::SetPixel(int x, int y, const Color &col) {
     if (x < 0 || x >= width() || y < 0 || y >= height())
         return;
-    int pos;
-    if(y % 2) //odd row
-    {
-        pos = y*width() + x;
-    }
-    else
-    {
-        pos = y*width() + (width()-x);
-    }
+
+    const int crate = y / 5;
+    y %= 5;
+    const int pos = 25 * crate + kCrateMapping[4-y][x];
     strip_->SetPixel(pos, col.r, col.g, col.b);
 }
 
