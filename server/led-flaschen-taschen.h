@@ -39,7 +39,7 @@ public:
 // parallel, that SPI send command is triggered within here.
 class SerialMatrixFlaschenTaschen : public ServerFlaschenTaschen {
 public:
-    SerialMatrixFlaschenTaschen(spixels::LEDStrip *strip, int width, int height);
+    SerialMatrixFlaschenTaschen(spixels::LEDStrip *strip, spixels::MultiSPI *spi,  int width, int height);
     ~SerialMatrixFlaschenTaschen();
 
     int width() const { return width_; }
@@ -50,6 +50,7 @@ public:
 
 private:
     spixels::LEDStrip *strip_;
+    spixels::MultiSPI *spi_;
     int width_;
     int height_;
 };

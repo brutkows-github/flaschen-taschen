@@ -22,8 +22,8 @@
 
 #include "led-strip.h"
 
-SerialMatrixFlaschenTaschen::SerialMatrixFlaschenTaschen(spixels::LEDStrip *strip, int width, int height)
-    : strip_(strip), height_(22), width_(30) {
+SerialMatrixFlaschenTaschen::SerialMatrixFlaschenTaschen(spixels::LEDStrip *strip, spixels::MultiSPI *spi, int width, int height)
+    : strip_(strip), spi_(spi), height_(22), width_(30) {
 }
 
 SerialMatrixFlaschenTaschen::~SerialMatrixFlaschenTaschen() {
@@ -34,17 +34,19 @@ void SerialMatrixFlaschenTaschen::SetPixel(int x, int y, const Color &col) {
     if (x < 0 || x >= width() || y < 0 || y >= height())
         return;
     int pos;
+    int x_adj = x;
+    int y_adj = height()-1-y;
     if(y % 2) //odd row
     {
-        pos = y*width() + x;
+        pos = y_adj*width() + x_adj;
     }
     else
     {
-        pos = y*width() + (width()-x-1);
+        pos = y_adj*width() + width()-x_adj-1;
     }
     strip_->SetPixel(pos, col.r, col.g, col.b);
 }
 
 void SerialMatrixFlaschenTaschen::Send() {
-//    spi_->SendBuffers();
+      spi_->SendBuffers();
 }
