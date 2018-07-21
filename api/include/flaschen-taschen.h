@@ -39,6 +39,7 @@ public:
     virtual int height() const = 0;
 
     virtual void SetPixel(int x, int y, const Color &col) = 0;
+    virtual void SetBrightness(int brightness) = 0;
     virtual void Send() = 0;
 };
 
