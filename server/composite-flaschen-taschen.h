@@ -44,7 +44,6 @@ public:
 
     // Set pixel to the currently configured layer (see SetLayer()).
     virtual void SetPixel(int x, int y, const Color &col);
-    virtual void SetBrightness(int brightness);
     virtual void Send();
 
     // -- Layering features

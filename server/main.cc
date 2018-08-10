@@ -187,7 +187,6 @@ int main(int argc, char *argv[]) {
         for(y=0; y<22; y++) {
            // fprintf(stderr, "x: %i, y: %i\n", x, y);
             display->SetPixel(x,y, red);
-            display->SetBrightness(64);
             display->Send();  // Clear screen.
         //    spi->SendBuffers();
             usleep(100);

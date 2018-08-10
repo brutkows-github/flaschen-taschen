@@ -30,10 +30,6 @@ SerialMatrixFlaschenTaschen::~SerialMatrixFlaschenTaschen() {
     delete strip_;
 }
 
-void SerialMatrixFlaschenTaschen::SetBrightness(int brightness) {
-    strip_->SetBrightness(brightness);
-}
-
 void SerialMatrixFlaschenTaschen::SetPixel(int x, int y, const Color &col) {
     if (x < 0 || x >= width() || y < 0 || y >= height())
         return;

@@ -46,7 +46,6 @@ public:
     int height() const { return height_; }
 
     void SetPixel(int x, int y, const Color &col);
-    void SetBrightness(int brightness);
     void Send();
 
 private:

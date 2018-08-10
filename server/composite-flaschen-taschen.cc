@@ -115,9 +115,6 @@ CompositeFlaschenTaschen::~CompositeFlaschenTaschen() {
     delete z_buffer_;
 }
 
-void CompositeFlaschenTaschen::SetBrightness(int brightness) {
-
-}
 void CompositeFlaschenTaschen::SetPixel(int x, int y, const Color &col) {
     if (x < 0 || x >= width_ || y < 0 || y >= height_) return;
     SetPixelAtLayer(x, y, current_layer_, col);
