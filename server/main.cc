@@ -98,8 +98,8 @@ static int usage(const char *progname) {
 }
 
 int main(int argc, char *argv[]) {
-    int width = 45;
-    int height = 35;
+    int width = 30;
+    int height = 22;
     int layer_timeout = 15;
 #if FT_BACKEND != 2
     bool as_daemon = false;

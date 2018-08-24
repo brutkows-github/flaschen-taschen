@@ -46,7 +46,7 @@ void SerialMatrixFlaschenTaschen::SetPixel(int x, int y, const Color &col) {
     }
     //if(x == width()-1 && y == 15)
     //if(y == 15)
-    if(pos == 209 || pos==599)
+    if(pos == 209 || pos==599 || pos==76 || pos==77)
     {
         strip_->SetPixel(pos, col.g, col.b, col.r);
     }
